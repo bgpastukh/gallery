@@ -1,0 +1,47 @@
+body {
+    padding-top: 20px;
+    background-color: darkgrey;
+}
+.starter-template {
+    text-align: center;
+}
+
+.panel {
+    text-align: center;
+    padding: 10px;
+}
+
+.user-image {
+    margin: 5px 0 10px;
+}
+
+.image-info {
+    height: 300px;
+}
+
+.image-info {
+    margin-top: 3px;
+    width: 48%;
+    float: right;
+}
+
+.image-pic {
+    width: 50%;
+    float: left;
+}
+
+.image {
+    height: 300px;
+}
+
+.choose {
+    margin-left: 20%;
+}
+
+.img-btn {
+    margin-left: 5px;
+}
+
+.comment {
+    width: 265px;
+}
