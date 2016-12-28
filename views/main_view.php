@@ -8,13 +8,14 @@
                     while( $row = mysqli_fetch_assoc($data) ){
                         echo '<div class="image">';
                         echo '<div class="image-pic">';
-                        echo '<img class="img-thumbnail user-image" src="' . '/public/uploads/' . $row['name'] .'">';
+//                        echo '<img class="img-thumbnail user-image" src="' . '/public/uploads/' . $row['name'] .'">';
+                        echo '<img class="img-thumbnail user-image" src="' . '/samsonos/public/uploads/' . $row['name'] .'">';
                         echo '</div>';
                         echo '<div class="image-info">';
                         echo '<div class="well date">' . $row['date'] . '</div>';
-                        echo '<div class="well comment">' . $row['comment'] . '</div>';
+                        echo '<input type="text" class="well comment" value="'. $row['comment'] .'">';
                         echo '<div class="hidden">' . $row['id'] . '</div>';
-                        echo '<button type="button" class="btn btn-sm btn-danger img-btn" onclick="window.location=\'/public/main/delete/'. $row['id'] .'\'" >Delete</button>';
+                        echo '<button type="button" class="btn btn-sm btn-danger img-btn" onclick="window.location=\'/samsonos/public/main/delete/'. $row['id'] .'\'" >Delete</button>';
                         echo '<button type="button" class="btn btn-sm btn-primary img-btn" onclick="window.location=\'/public/main/edit/'. $row['id'] .'\'" id="edit-btn" >Edit</button>';
                         echo '</div>';
                         echo '</div>';
@@ -54,13 +55,14 @@
 
 
 var files;
-
+var comment;
 // Вешаем функцию на событие
 // Получим данные файлов и добавим их в переменную
 
 $('input[type=file]').change(function(){
     files = this.files;
 });
+
 
 $('.submit').click(function( event ){
     event.stopPropagation(); // Остановка происходящего
@@ -73,39 +75,25 @@ $('.submit').click(function( event ){
         data.append( key, value );
     });
 
+    comment = $('#comment').val();
+    data.append('comment', comment);
+
     // Отправляем запрос
 
-    $.ajax({
-        url: '/public/main/upload/',
+    $.post({
+        url: '/samsonos/public/main/upload/',
         type: 'POST',
         data: data,
         cache: false,
-        dataType: 'json',
+        dataType: 'html',
         processData: false, // Не обрабатываем файлы (Don't process the files)
-        contentType: false, // Так jQuery скажет серверу что это строковой запрос
-        success: function( respond, textStatus, jqXHR ){
-
-            // Если все ОК
-
-            if( typeof respond.error === 'undefined' ){
-                // Файлы успешно загружены, делаем что нибудь здесь
-
-                // выведем пути к загруженным файлам в блок '.ajax-respond'
-
-                var files_path = respond.files;
-                var html = '';
-                $.each( files_path, function( key, val ){ html += val +'<br>'; } )
-                $('.ajax-respond').html( html );
-            }
-            else{
-                console.log('ОШИБКИ ОТВЕТА сервера: ' + respond.error );
-            }
-        },
-        error: function( jqXHR, textStatus, errorThrown ){
-            console.log('ОШИБКИ AJAX запроса: ' + textStatus );
-        }
-    });
-
+        contentType: false
+            }).done(function (data) {
+//                $('html').html( data );
+                location.reload();
+            });
 });
 
 </script>
+
+

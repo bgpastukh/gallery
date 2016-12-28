@@ -7,7 +7,7 @@ class Model_Main extends Model
     public function connectDB()
     {
         // DB connection
-        $link = mysqli_connect("localhost", "pastukh", "3stUdiowoRks3", "pastukh");
+        $link = mysqli_connect("localhost", "root", "", "pastukh");
 
         if (!$link) {
             throw new Exception('Can not connect to DB');
@@ -28,11 +28,10 @@ class Model_Main extends Model
     public function upload()
     {
         $link = $this->link;
-        $uploadDir = '/var/www.pastukh/gallery.local/www/public/uploads/';
+//        $uploadDir = '/var/www.pastukh/gallery.local/www/public/uploads/';
+        $uploadDir = '/opt/lampp/htdocs/samsonos/public/uploads/';
         $uploadFile = $uploadDir . basename($_FILES[0]['name']);
-//        $comment = $_POST['comment'];
-        $comment = 'comment';
-        var_dump($_FILES);
+        $comment = $_POST['comment'];
         $name = $_FILES[0]['name'];
         $size = $_FILES[0]['size'];
 
@@ -61,8 +60,6 @@ class Model_Main extends Model
         {
             throw new Exception('Error! SQL-query was not performed');
         }
-
-        mysqli_close($link);
 
 //        header('Location: /public/');
     }

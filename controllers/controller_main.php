@@ -18,6 +18,8 @@ class Controller_Main extends Controller
     function action_upload()
     {
         $this->model->upload();
+        $data = $this->model->showGallery();
+        $this->view->generate('main_view.php', 'template_view.php', $data);
     }
 
     function action_date()
