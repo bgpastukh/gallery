@@ -17,20 +17,20 @@ class Controller_Main extends Controller
 
     function action_upload()
     {
-        $this->model->upload();
-        $data = $this->model->showGallery();
-        $this->view->generate('main_view.php', 'template_view.php', $data);
+        $data = $this->model->upload();
+        echo $data;
     }
 
-    function action_date()
+    function action_sort_date()
     {
         $data = $this->model->sortByDate();
-        $this->view->generate('main_view.php', 'template_view.php', $data);
+        echo $data;
     }
-    function action_size()
+
+    function action_sort_size()
     {
         $data = $this->model->sortBySize();
-        $this->view->generate('main_view.php', 'template_view.php', $data);
+        echo $data;
     }
 
     function action_edit()
@@ -40,12 +40,6 @@ class Controller_Main extends Controller
 
     function action_delete()
     {
-        $url = $_SERVER['REQUEST_URI'];
-        $id = substr( $url, strripos($url, '/') + 1);
-
-        $this->model->delete($id);
-
-        $data = $this->model->showGallery();
-        $this->view->generate('main_view.php', 'template_view.php', $data);
+        $this->model->delete();
     }
 }
