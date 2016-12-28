@@ -12,15 +12,15 @@ class Route
         array_shift($routes);
 
         // get controller
-        if ( !empty($routes[1]) )
+        if ( !empty($routes[2]) )
         {
-            $controller_name = $routes[1];
+            $controller_name = $routes[2];
         }
 
         // get action
-        if ( !empty($routes[2]) )
+        if ( !empty($routes[3]) )
         {
-            $action_name = $routes[2];
+            $action_name = $routes[3];
         }
 
         // add prefixes

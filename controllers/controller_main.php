@@ -35,6 +35,7 @@ class Controller_Main extends Controller
 
     function action_edit()
     {
+        $this->model->edit();
     }
 
     function action_delete()
@@ -44,5 +45,7 @@ class Controller_Main extends Controller
 
         $this->model->delete($id);
 
+        $data = $this->model->showGallery();
+        $this->view->generate('main_view.php', 'template_view.php', $data);
     }
 }

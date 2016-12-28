@@ -7,7 +7,7 @@ class Model_Main extends Model
     public function connectDB()
     {
         // DB connection
-        $link = mysqli_connect("localhost", "root", "", "pastukh");
+        $link = mysqli_connect("localhost", "pastukh", "3stUdiowoRks3", "pastukh");
 
         if (!$link) {
             throw new Exception('Can not connect to DB');
@@ -28,8 +28,7 @@ class Model_Main extends Model
     public function upload()
     {
         $link = $this->link;
-//        $uploadDir = '/var/www.pastukh/gallery.local/www/public/uploads/';
-        $uploadDir = '/opt/lampp/htdocs/samsonos/public/uploads/';
+        $uploadDir = '/var/www.pastukh/gallery.local/www/second/public/uploads/';
         $uploadFile = $uploadDir . basename($_FILES[0]['name']);
         $comment = $_POST['comment'];
         $name = $_FILES[0]['name'];
@@ -37,7 +36,7 @@ class Model_Main extends Model
 
         $date = date("Y-m-d H:i:s");
 
-        if ($_FILES[0]['error'])
+        if ($_FILES[0]['size'] > 1000000)
         {
             throw new Exception('Error! Image is to big!');
         }
@@ -60,8 +59,6 @@ class Model_Main extends Model
         {
             throw new Exception('Error! SQL-query was not performed');
         }
-
-//        header('Location: /public/');
     }
 
     public function sortByDate()
@@ -85,12 +82,14 @@ class Model_Main extends Model
         $link = $this->link;
         $query = "DELETE FROM `gallery` WHERE `id` = {$id}";
         mysqli_query($link, $query);
-        header('Location: /public/');
     }
 
     public function edit()
     {
-
+        $link = $this->link;
+        $id = $_POST['id'];
+        $comment = htmlspecialchars($_POST['comment']);
+        $query = "UPDATE `gallery` SET comment='$comment' WHERE `id` = {$id}";
+        mysqli_query($link, $query);
     }
-
 }
