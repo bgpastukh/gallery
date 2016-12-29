@@ -45,3 +45,15 @@ body {
 .comment {
     width: 265px;
 }
+
+.submit {
+    margin-top: 15px;
+}
+
+.massage {
+    margin: 10px auto 0;
+    width: 150px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+

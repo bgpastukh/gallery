@@ -3,7 +3,7 @@
         <div class="starter-template">
             <h1 class="cover-heading">Beautiful gallery (no) </h1>
             <div class="col-md-6 gallery">
-                <?= $data ?>
+                <?= $data; ?>
             </div>
 
             <div class="col-md-6">
@@ -13,8 +13,8 @@
                     <br>
                     <label for="comment">Comment: </label> <input class="comment rf" type="text" name="comment" id="comment" required/>
                     <br>
-                    <br>
                     <div class="btn btn-lg btn-default submit" >Send image</div>
+                    <div class="massage"></div>
                 </form>
 
                 <h2>Sort by:</h2>

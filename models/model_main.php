@@ -56,20 +56,13 @@ class Model_Main extends Model
 
         $id = mysqli_insert_id($link);
 
-        $data = <<<EOD
-            <div class="image">
-                <div class="image-pic">
-                    <img class="img-thumbnail user-image" src="/second/public/uploads/$name">
-                </div>
-                <div class="image-info">
-                    <div class="well date">$date</div>
-                    <input type="text" class="well comment" value="$comment">
-                    <div class="hidden">$id</div>
-                    <button type="button" class="btn btn-sm btn-danger img-btn delete-btn">Delete</button>
-                    <button type="button" class="btn btn-sm btn-primary img-btn edit-btn">Edit</button>
-                </div>
-            </div>
-EOD;
+//      Array for form.php
+        $row = ['id' => $id, 'name' => $name, 'comment' => $comment, 'date' => $date, 'size' => $size];
+
+        ob_start();
+            include('../views/form.php');
+            $data = ob_get_contents();
+        ob_end_clean();
 
         return $data;
     }
@@ -92,8 +85,12 @@ EOD;
     {
         $link = $this->link;
         $id = $_POST['id'];
+        $src = $_POST['src'];
+        $sep = strripos($src, '/');
+        $src = '/var/www.pastukh/gallery.local/www/second/public/uploads/' . substr($src, $sep + 1);
         $query = "DELETE FROM `gallery` WHERE `id` = {$id}";
         mysqli_query($link, $query);
+        unlink($src);
     }
 
     public function edit()
@@ -109,22 +106,12 @@ EOD;
     {
         $link = $this->link;
         $data = mysqli_query($link, $query);
-        $str = "";
+        ob_start();
         while ($row = mysqli_fetch_assoc($data)) {
-            $str .= '<div class="image">';
-            $str .= '<div class="image-pic">';
-            $str .= '<img class="img-thumbnail user-image" src="' . '/second/public/uploads/' . $row['name'] . '">';
-            $str .= '</div>';
-            $str .= '<div class="image-info">';
-            $str .= '<div class="well date">' . $row['date'] . '</div>';
-            $str .= '<input type="text" class="well comment" value="' . $row['comment'] . '">';
-            $str .= '<div class="hidden">' . $row['id'] . '</div>';
-            $str .= '<button type="button" class="btn btn-sm btn-danger img-btn delete-btn">Delete</button>';
-            $str .= '<button type="button" class="btn btn-sm btn-primary img-btn edit-btn">Edit</button>';
-            $str .= '</div>';
-            $str .= '</div>';
+            include('../views/form.php');
         }
-
-        return $str;
+        $images = ob_get_contents();
+        ob_end_clean();
+        return $images;
     }
 }
