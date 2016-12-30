@@ -7,7 +7,7 @@ class Model_Main extends Model
     public function connectDB()
     {
         // DB connection
-        $link = mysqli_connect("localhost", "pastukh", "3stUdiowoRks3", "pastukh");
+        $link = mysqli_connect("database_host", "user_name", "password", "database_name");
 
         if (!$link) {
             throw new Exception('Can not connect to DB');
